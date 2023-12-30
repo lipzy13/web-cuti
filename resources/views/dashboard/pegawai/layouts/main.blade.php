@@ -7,11 +7,9 @@
   @vite('resources/css/app.css')
 </head>
 <body>
-  <div class="container flex">
-      @include('dashboard.layouts.sidebar')
-    <div class="lg:ml-60 lg:pl-4 lg:flex w-full ">
+  <div class="flex">
+      @include('dashboard.pegawai.layouts.sidebar')
       @yield('container')
-    </div>
   </div>
 
   <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>

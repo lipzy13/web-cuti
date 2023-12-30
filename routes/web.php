@@ -22,5 +22,9 @@ Route::get('/tes', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard.pegawai.index');
+    return view('dashboard.pegawai.index',);
+});
+
+Route::get('/dashboard/pengajuan', function () {
+    return view('dashboard.pegawai.pengajuan');
 });

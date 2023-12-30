@@ -1,4 +1,4 @@
-<div id="sideNav" class="lg:block hidden bg-[#FAFAFA] w-64 h-screen fixed rounded-none border-none">
+<div id="sideNav" class=" bg-[#FAFAFA] w-1/6 rounded-none border-none">
     <h1 class="text-4xl font-bold ps-7 pt-20">Dash<br/>board</h1>
     <div class="p-4 mt-4 space-y-4">
         <a href="/dashboard" aria-label="dashboard"
@@ -7,7 +7,7 @@
             <span class="-mr-1 font-medium">Beranda</span>
         </a>
 
-        <a href="/pengajuan" class="px-4 py-0.5 flex items-center space-x-4  text-gray-500 group">
+        <a href="/dashboard/pengajuan" class="px-4 py-0.5 flex items-center space-x-4  text-gray-500 group">
             <x-gmdi-date-range class="w-6"/>
             <span>Pengajuan</span>
         </a>
