@@ -1,25 +1,51 @@
+<?php
+use Carbon\Carbon;
+Carbon::setLocale('id');
+use App\Models\Kontrak;
+?>
 @extends('dashboard.pegawai.layouts.main')
-
 @section('container')
-<div class=" bg-zinc-100 w-5/6 " x-data="{ showModal: false, email: '' }">
-    <div x-show="showModal" class="fixed inset-0 transition-opacity z-10" aria-hidden="true" @click="showModal = false">
-        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-      </div>
+<div class=" bg-zinc-100 w-5/6 h-screen " >
+
     <div class="grid grid-cols-4 gap-4 p-4 ">
         <div class="bg-white p-4 rounded-md col-span-3 pl-8 shadow-xl">
-            <h2 class="mt-4 text-5xl font-bold pb-4">Nama Lengkap</h2>
-            <h2 class="text-3xl font-light pb-10">NIP</h2>
+            <h2 class="mt-4 text-5xl font-bold pb-4">{{ auth()->user()->pegawai->nama }}</h2>
+            <h2 class="text-3xl font-light pb-10">{{ auth()->user()->nip }}</h2>
     </div>
     <div class="bg-white p-4 col-span-1 rounded-md shadow-xl">
         <div style="width: 80%; margin: auto;">
             <canvas id="doughnutChart"></canvas>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    var ctx = document.getElementById('doughnutChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Terpakai', 'Tersisa'],
+            datasets: [{
+                data: [{{ $durasi }}, {{Carbon::parse($kontrak_aktif->tanggal_mulai)
+        ->diffInMonths(Carbon::parse($kontrak_aktif->tanggal_selesai)) - $durasi }}],
+                backgroundColor: [
+                    '#57BEB5',
+                    '#3070F5',
+                ],
+                borderColor: [
+                    '#57BEB5',
+                    '#3070F5',
+                ],
+                borderWidth: 1,
+            }]
+        },
+    });
+</script>
         </div>
-        <h1 class="font-bold text-2xl mt-3">3/12</h1>
-        <h2 class="text-gray-600 text-sm font-semibold ">Cuti tersisa</h2>
+        <h1 class="font-bold text-2xl mt-3">{{ $durasi }}/{{Carbon::parse($kontrak_aktif->tanggal_mulai)
+        ->diffInMonths(Carbon::parse($kontrak_aktif->tanggal_selesai)) }}</h1>
+        <h2 class="text-gray-600 text-sm font-semibold ">Cuti</h2>
     </div>
     <div class="bg-white p-4 rounded-md col-start-1 col-end-5 shadow-xl" >
       <div class=" items-center justify-center w-full">
-          <div class="overflow-x-auto shadow-md sm:rounded-lg">
+          {{-- <div class="overflow-x-auto shadow-md sm:rounded-lg">
               <div class="overflow-x-auto shadow-md sm:rounded-lg">
               <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                   <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -31,34 +57,22 @@
                   </tr>
                   </thead>
                   <tbody>
+                  @foreach ($kontrak as $kontra)    
                   <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                      <td class="py-4 px-6">1</td>
-                      <td class="py-4 px-6">XXXX-XXXX-XXXX-XXXX</td>
+                      <td class="py-4 px-6">{{ $loop->iteration }}</td>
+                      <td class="py-4 px-6">{{ $kontra->no_kontrak }}</td>
                       <td class="py-4 px-6"></td>
                       <td class="py-4 px-6"><button @click="showModal = true"><x-gmdi-info class="w-6"/></button></td>
                   </tr>
-                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                      <td class="py-4 px-6">2</td>
-                      <td class="py-4 px-6">XXXX-XXXX-XXXX-XXXX</td>
-                      <th class="py-4 px-6"></th>
-                      <th class="py-4 px-6"><x-gmdi-info class="w-6"/></th>
-                  </tr>
-                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                      <td class="py-4 px-6">3</td>
-                      <td class="py-4 px-6">XXXX-XXXX-XXXX-XXXX</td>
-                      <th class="py-4 px-6"></th>
-                      <th class="py-4 px-6"><x-gmdi-info class="w-6"/></th>
-                  </tr>
-                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <td class="py-4 px-6">4</td>
-                    <td class="py-4 px-6">XXXX-XXXX-XXXX-XXXX</td>
-                    <th class="py-4 px-6"></th>
-                    <th class="py-4 px-6"><x-gmdi-info class="w-6"/></th>
-                </tr>
+                  @endforeach
                   </tbody>
               </table>
               </div>
-          </div>
+          </div> --}}
+
+          {{ $tes }}
+
+          @if (count($kontrak) > 3)   
           <div class="flex flex-1 justify-center mt-2">
             <ul class="inline-flex -space-x-px text-sm">
               <li>
@@ -78,115 +92,61 @@
               </li>
             </ul>
           </div>
-      </div>
-  </div>
-  </div>
-
-<div x-show="showModal" x-transition:enter="transition ease-out duration-300 transform" x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" class="fixed z-10 inset-0 overflow-y-auto" x-cloak>
-    <div class="flex items-end pt-4 text-center sm:block ">
-      <!-- Modal panel -->
-      <div class="w-full inline-block align-bottom bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-6xl sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-          <!-- Modal content -->
-          <div class="sm:flex sm:items-start">
-            <div class="w-full mt-3 text-center sm:mt-0 sm:mx-4 sm:text-left">
-              <h3 class="text-xl leading-6 font-medium text-gray-900" id="modal-headline"> Kontrak </h3>
-              <div class="mt-2">
-                <p class="text-base text-gray-900"> NIP </p>
-                <p class="text-sm text-gray-500">00000000</p>
-              </div>
-              <div class="mt-2">
-                <p class="text-base text-gray-900"> Nomor Kontrak </p>
-                <p class="text-sm text-gray-500">XXXX-XXXX-XXXX-XXXX</p>
-              </div>
-              <div class="mt-4">
-                <table class="w-full">
-                  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class="py-3 px-2">No</th>
-                        <th scope="col" class="py-3 px-4">Nomor Surat</th>
-                        <th scope="col" class="py-3 px-4">Tanggal Mulai</th>
-                        <th scope="col" class="py-3 px-4">Tanggal Selesai</th>
-                        <th scope="col" class="py-3 px-3">Lama Cuti</th>
-                        <th scope="col" class="py-3 px-3">Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                <tr class="bg-white border-b ">
-                    <td class="py-4 px-2">1</td>
-                    <td class="py-4 px-4">XXXX-XXXX-XXXX-XXXX</td>
-                    <td class="py-4 px-4">30 Desember 2023</td>
-                    <td class="py-4 px-4">31 Desember</td>
-                    <td class="py-4 px-3">1 Hari</td>
-                    <td class="py-4 px-3 font-bold text-[#10b981] flex gap-1 text-sm align-middle"><x-gmdi-check-tt class="w-5"/>Diverifikasi</td>
-                </tr>
-                <tr class="bg-white border-b">
-                    <td class="py-4 px-2">2</td>
-                    <td class="py-4 px-4">XXXX-XXXX-XXXX-XXXX</td>
-                    <td class="py-4 px-4">2 Februari 2024</td>
-                    <td class="py-4 px-4">2 Februari 2024</td>
-                    <td class="py-4 px-3">1 Hari</td>
-                    <td class="py-4 px-3 font-bold text-[#10b981] flex gap-1 text-sm align-middle"><x-gmdi-check-tt class="w-5"/>Diverifikasi</td>
-                </tr>
-                <tr class="bg-white border-b">
-                  <td class="py-4 px-2">3</td>
-                  <td class="py-4 px-4">XXXX-XXXX-XXXX-XXXX</td>
-                  <td class="py-4 px-4">2 Februari 2024</td>
-                  <td class="py-4 px-4">2 Februari 2024</td>
-                  <td class="py-4 px-3">1 Hari</td>
-                  <td class="py-4 px-3 font-bold text-[#10b981] flex gap-1 text-sm align-middle"><x-gmdi-check-tt class="w-5"/>Diverifikasi</td>
-              </tr>
-              <tr class="bg-white border-b">
-                <td class="py-4 px-2">4</td>
-                <td class="py-4 px-4">XXXX-XXXX-XXXX-XXXX</td>
-                <td class="py-4 px-4">2 Februari 2024</td>
-                <td class="py-4 px-4">2 Februari 2024</td>
-                <td class="py-4 px-3">1 Hari</td>
-                <td class="py-4 px-3 font-bold text-[#10b981] flex gap-1 text-sm align-middle"><x-gmdi-check-tt class="w-5"/>Diverifikasi</td>
+          @endif
+          <div class="hs-accordion-group">
+            @foreach ($kontrak as $kontra)
+            <div class="hs-accordion" id="hs-basic-with-title-and-arrow-stretched-heading-{{ $loop->iteration }}">
+              <button class="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-gray-200 dark:hover:text-gray-400 dark:focus:outline-none dark:focus:text-gray-400" aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-{{ $loop->iteration }}">
+                {{ $loop->iteration }}. {{ $kontra->no_kontrak }}
+                <svg class="hs-accordion-active:hidden block w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                <svg class="hs-accordion-active:block hidden w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+              </button>
+              <div id="hs-basic-with-title-and-arrow-stretched-collapse-{{ $loop->iteration }}" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-{{ $loop->iteration }}">
+                <div class="flex flex-col">
+  <div class="-m-1.5 overflow-x-auto">
+    <div class="p-1.5 min-w-full inline-block align-middle">
+      <div class="overflow-hidden">
+        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+          <thead>
+            <tr>
+              <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">No</th>
+              <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Tanggal Mulai</th>
+              <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Tanggal Selesai</th>
+              <th scope="col" class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">Lama Cuti</th>
             </tr>
-            <tr class="bg-white border-b">
-              <td class="py-4 px-2">5</td>
-              <td class="py-4 px-4">XXXX-XXXX-XXXX-XXXX</td>
-              <td class="py-4 px-4">2 Februari 2024</td>
-              <td class="py-4 px-4">2 Februari 2024</td>
-              <td class="py-4 px-3">1 Hari</td>
-              <td class="py-4 px-3 font-bold text-[#10b981] flex gap-1 text-sm align-middle"><x-gmdi-check-tt class="w-5"/>Diverifikasi</td>
-          </tr>
-                </tbody>
-                </table>
-                <div class="flex flex-1 justify-center mt-3">
-                  <ul class="inline-flex -space-x-px text-sm">
-                    <li>
-                      <a href="#" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
-                    </li>
-                    <li>
-                      <a href="#" aria-current="page" class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">1</a>
-                    </li>
-                    <li>
-                      <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-                    </li>
-                    <li>
-                      <a href="#" aria-current="page" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">3</a>
-                    </li>
-                    <li>
-                      <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-          <!-- Subscribe button -->
-          <button @click="showModal = false" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"> Tutup </button>
-          <!-- Cancel button -->
-        </div>
+          </thead>
+          <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+          @if (count(Kontrak::find($kontra->no_kontrak)->cuti))
+            @foreach ((Kontrak::find($kontra->no_kontrak)->cuti) as $cut)     
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">{{ $loop->iteration }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ Carbon::parse($cut->tanggal_mulai)->translatedFormat('j F Y') }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ Carbon::parse($cut->tanggal_selesai)->translatedFormat('j F Y') }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">{{ Carbon::parse($cut->tanggal_mulai)
+                ->diffInDays(Carbon::parse($cut->tanggal_selesai))+1 }} Hari </td>
+            </tr>
+            @endforeach
+          </tbody>
+          @else 
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200"></td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200"></td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">Data tidak ditemukan</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200"></td></tr>
+              
+          @endif
+        </table>
       </div>
     </div>
   </div>
-
 </div>
+              </div>
+            </div>  
+            @endforeach
+          </div>
+      </div>
+  </div>
+  </div>
 
 
 @endsection

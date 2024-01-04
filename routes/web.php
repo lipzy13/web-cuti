@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DashboardPegawaiController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,17 +16,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
-Route::get('/tes', function () {
-    return view('app');
-});
+Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
+Route::post('/login', [LoginController::class, 'authenticate']);
+Route::post('/logout', [LoginController::class, 'logout']);
 
-Route::get('/dashboard', function () {
-    return view('dashboard.pegawai.index',);
-});
-
-Route::get('/dashboard/pengajuan', function () {
-    return view('dashboard.pegawai.pengajuan');
-});
+Route::get('/dashboard',[DashboardPegawaiController::class, 'index'])->middleware('auth');
+Route::resource('/dashboard',DashboardPegawaiController::class)->middleware('auth');
