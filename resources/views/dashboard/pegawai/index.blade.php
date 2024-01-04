@@ -69,9 +69,6 @@ use App\Models\Kontrak;
               </table>
               </div>
           </div> --}}
-
-          {{ $tes }}
-
           @if (count($kontrak) > 3)   
           <div class="flex flex-1 justify-center mt-2">
             <ul class="inline-flex -space-x-px text-sm">
