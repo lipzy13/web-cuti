@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('kontraks', function (Blueprint $table) {
             $table->id();
-            $table->integer('nip');
-            $table->text('no_kontrak');
-            $table->dateTime('tanggal_mulai')->nullable(false);
-            $table->dateTime('tanggal_selesai')->nullable(false);
-            $table->integer('jumlah_cuti');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('no_kontrak');
+            $table->date('tanggal_mulai');
+            $table->date('tanggal_selesai');
             $table->boolean('aktif');
+            $table->integer('sisa_cuti');
+            $table->integer('jumlah_cuti')->default(0);
+            $table->integer('jumlah_bulan');
             $table->timestamps();
         });
     }

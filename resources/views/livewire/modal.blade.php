@@ -1,85 +1,85 @@
-<div x-show="showModal" x-transition:enter="transition ease-out duration-300 transform" 
-  x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" 
-  x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" 
-  x-transition:leave="transition ease-in duration-200 transform" 
-  x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" 
-  x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" 
-  class="fixed z-10 inset-0 overflow-y-auto" x-cloak>
-    <div class="flex items-end pt-4 text-center sm:block ">
-      <!-- Modal panel -->
-      <div class="w-full inline-block align-bottom bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-6xl sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-          <!-- Modal content -->
-          <div class="sm:flex sm:items-start">
-            <div class="w-full mt-3 text-center sm:mt-0 sm:mx-4 sm:text-left">
-              <h3 class="text-xl leading-6 font-medium text-gray-900" id="modal-headline"> Kontrak </h3>
-              <div class="mt-2">
-                <p class="text-base text-gray-900"> NIP </p>
-                <p class="text-sm text-gray-500">{{ auth()->user()->nip }}</p>
-              </div>
-              <div class="mt-2">
-                <p class="text-base text-gray-900"> Nomor Kontrak </p>
-                <p class="text-sm text-gray-500">{{ $kontrak->first()->no_kontrak }}</p>
-              </div>
-              <div class="mt-2">
-                <p class="text-base text-gray-900"> Tanggal Mulai </p>
-                <p class="text-sm text-gray-500"> {{ Carbon::parse($kontrak->first()->tanggal_mulai)->translatedFormat('j F Y') }} </p>
-              </div>
-              <div class="mt-2">
-                <p class="text-base text-gray-900"> Tanggal Selesai </p>
-                <p class="text-sm text-gray-500">{{ Carbon::parse($kontrak->first()->tanggal_selesai)->translatedFormat('j F Y') }}</p>
-              </div>
-              <div class="mt-4">
-                <table class="w-full">
-                  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class="py-3 px-2">No</th>
-                        <th scope="col" class="py-3 px-4">Tanggal Mulai</th>
-                        <th scope="col" class="py-3 px-4">Tanggal Selesai</th>
-                        <th scope="col" class="py-3 px-3">Lama Cuti</th>
-                        <th scope="col" class="py-3 px-3">Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                <tr class="bg-white border-b ">
-                    <td class="py-4 px-2">1</td>
-                    <td class="py-4 px-4">30 Desember 2023</td>
-                    <td class="py-4 px-4">31 Desember 2023</td>
-                    <td class="py-4 px-3">1 Hari</td>
-                    <td class="py-4 px-3 font-bold text-[#10b981] flex gap-1 text-sm align-middle"><x-gmdi-check-tt class="w-5"/>Diverifikasi</td>
-                </tr>
-                </tbody>
-                </table>
-                <div class="flex flex-1 justify-center mt-3">
-                  <ul class="inline-flex -space-x-px text-sm">
-                    <li>
-                      <a href="#" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
-                    </li>
-                    <li>
-                      <a href="#" aria-current="page" class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">1</a>
-                    </li>
-                    <li>
-                      <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-                    </li>
-                    <li>
-                      <a href="#" aria-current="page" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">3</a>
-                    </li>
-                    <li>
-                      <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+<div id="hs-{{ $kontrak->id }}" class="hs-overlay hidden w-full h-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto">
+    <div class="hs-overlay-open:mt-2 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto text-left">
+        <div class="relative flex flex-col bg-white border shadow-sm rounded-xl overflow-hidden dark:bg-gray-800 dark:border-gray-700">
+            <div class="absolute top-2 end-2">
+                <button type="button" class="flex justify-center items-center w-7 h-7 text-sm font-semibold rounded-lg border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:border-transparent dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" data-hs-overlay="#hs-{{ $kontrak->id }}">
+                    <span class="sr-only">Close</span>
+                    <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
             </div>
-          </div>
-        </div>
-        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-          <!-- Subscribe button -->
-          <button @click="showModal = false" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"> Tutup </button>
-          <!-- Cancel button -->
-        </div>
-      </div>
-    </div>
-  </div>
 
+            <div class="p-2 sm:p-10 overflow-y-auto">
+                <div class="mb-2 text-center">
+                    <h3 class=" text-xl font-bold text-gray-800 dark:text-gray-200">
+                        Kontrak
+                    </h3>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label for="nama" class=" block text-sm mb-2">Nama</label>
+                        <input type="text" name="nama" id="nama" class="
+          py-3 px-4 block w-full border-gray-200 rounded-lg text-sm text-gray-500 bg-gray-300 "
+                               value="{{$kontrak->user->nama}}" readonly="readonly">
+                    </div>
+                    <form wire:submit="save" wire:confirm="Yakin ingin merubah data kontrak?">
+                    <div>
+                        <label for="no_kontrak" class="block text-sm mb-2 dark:text-white">Nomor Kontrak</label>
+                        <div class="relative">
+                            <input type="text" id="no_kontrak" name="no_kontrak" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900
+                            dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600 border"
+                                   required value="{{ $kontrak->no_kontrak }}" wire:model="no_kontrak">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="aktif" class="block text-sm mb-2 dark:text-white">Status Kontrak</label>
+                        <div class="relative">
+                            <select class="border py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm  disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                            wire:model="aktif">
+                                <option selected value=1>Aktif</option>
+                                <option value=0>Non Aktif</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="tanggal_mulai" class="block text-sm mb-2 dark:text-white">Tanggal Mulai</label>
+                        <div class="relative">
+                            <input type="date" class="
+                        py-3 px-4 block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                                   value="{{ $kontrak->tanggal_mulai }}"
+                            wire:model="tanggal_mulai">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="tanggal_selesai" class="block text-sm mb-2 dark:text-white">Tanggal Selesai</label>
+                        <div class="relative">
+                            <input type="date" class="
+                        py-3 px-4 block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                                   value="{{ $kontrak->tanggal_selesai }}"
+                            wire:model="tanggal_selesai">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="jumlah_cuti" class="block text-sm dark:text-white">Jumlah Cuti</label>
+                        <div class="relative">
+                            <input type="number" class="
+                        py-3 px-4 block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                                   value="{{ $kontrak->sisa_cuti }}"
+                            wire:model="jumlah_cuti">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end items-center gap-x-2 py-3 px-4 bg-gray-50 border-t dark:bg-gray-800 dark:border-gray-700">
+                <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" data-hs-overlay="#hs-{{ $kontrak->id }}">
+                    Cancel
+                </button>
+                <button type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                    Submit
+                </button>
+            </div>
+        </form>
+        </div>
+    </div>
 </div>

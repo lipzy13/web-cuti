@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('nip');
-            $table->string('password');
+            $table->string('nama');
+            $table->integer('nik')->unique();
+            $table->date('tanggal_masuk');
+            $table->string('jabatan');
+            $table->string('password')->default(bcrypt('pass'));
             $table->rememberToken();
             $table->timestamps();
         });

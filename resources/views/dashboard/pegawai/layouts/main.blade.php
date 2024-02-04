@@ -9,11 +9,11 @@
   @livewireStyles
 </head>
 <body>
-  <div class="flex">
+  <div class="flex w-screen max-h-screen">
       @include('dashboard.pegawai.layouts.sidebar')
       @yield('container')
   </div>
-  
+
   @livewireScripts
   <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
   <script src="https://unpkg.com/alpinejs" defer></script>

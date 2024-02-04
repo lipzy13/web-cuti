@@ -13,10 +13,16 @@ return new class extends Migration
     {
         Schema::create('cutis', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('tanggal_mulai');
-            $table->dateTime('tanggal_selesai');
             $table->string('no_kontrak');
-            $table->integer('lama_hari');
+            $table->foreignId('kontrak_id')->constrained()->onDelete('cascade'); 
+            $table->string('file_path')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('tanggal_cutis', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('cuti_id')->constrained()->onDelete('cascade');
+            $table->date('tanggal_cuti');
             $table->timestamps();
         });
     }
@@ -26,6 +32,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('tanggal_cutis');
         Schema::dropIfExists('cutis');
     }
 };

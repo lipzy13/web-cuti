@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -22,6 +23,9 @@ class User extends Authenticatable
     protected $fillable = [
         'nik',
         'password',
+        'nama',
+        'jabatan',
+        'tanggal_masuk'
     ];
 
     /**
@@ -44,7 +48,14 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function pegawai () : HasOne {
-        return $this->hasone(Pegawai::class,'nip','nip');
+    protected $guarded = ['id'];
+    public function scopeNama(Builder $query, string $nama) : Builder{
+        return $query->where('nama', 'LIKE', '%'.$nama.'%');
     }
+
+    public function kontrak()
+    {
+        return $this->hasMany(Kontrak::class);
+    }
+
 }
