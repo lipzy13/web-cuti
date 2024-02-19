@@ -33,7 +33,7 @@ class DownloadAll extends Component
         // Create a temporary zip file
         if ($zip->open($zipFileName, ZipArchive::CREATE | ZipArchive::OVERWRITE)){
             foreach ($filePaths as $index=>$filePath) {
-                $zip->addFile('storage/'.$filePath,);
+                $zip->addFile('storage/'.$filePath);
                 $filenames = sprintf("%02d_%s.pdf", $index + 1, strtoupper($this->kontrak->user->nama));
                 $zip->renameName('storage/'.$filePath, $filenames);
             }

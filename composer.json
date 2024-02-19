@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "ext-zip": "*",
         "codeat3/blade-google-material-design-icons": "^1.18",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
@@ -15,12 +16,15 @@
         "maatwebsite/excel": "^3.1",
         "madnest/madzipper": "^1.4",
         "maennchen/zipstream-php": "^3.1",
-        "ext-zip": "*"
+        "novay/laravel-word-template": "^1.1",
+        "phpoffice/phpword": "^1.2",
+        "realrashid/sweet-alert": "^7.1",
+        "spatie/laravel-missing-page-redirector": "^2.9"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
-        "laravel/sail": "^1.18",
+        "laravel/sail": "^1.27",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^7.0",
         "phpunit/phpunit": "^10.1",

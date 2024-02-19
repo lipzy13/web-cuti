@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('cutis', function (Blueprint $table) {
             $table->id();
             $table->string('no_kontrak');
-            $table->foreignId('kontrak_id')->constrained()->onDelete('cascade'); 
+            $table->foreignId('kontrak_id')->constrained()->onDelete('cascade');
             $table->string('file_path')->nullable();
+            $table->integer('jenisCuti');
             $table->timestamps();
         });
 

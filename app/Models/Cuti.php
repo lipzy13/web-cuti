@@ -17,6 +17,7 @@ class Cuti extends Model
         'no_kontrak',
         'kontrak_id',
         'file_path',
+        'jenisCuti'
     ];
 
     public function hitungJumlahHariCuti()

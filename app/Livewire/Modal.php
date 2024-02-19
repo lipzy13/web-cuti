@@ -14,6 +14,7 @@ class Modal extends Component
     public $tanggal_mulai;
     public $tanggal_selesai;
     public $sisa_cuti;
+    public $jumlah_cuti;
 
     public function  mount($kontrak){
         $this->kontrak = $kontrak;
@@ -22,6 +23,7 @@ class Modal extends Component
         $this->tanggal_mulai = $kontrak->tanggal_mulai;
         $this->tanggal_selesai = $kontrak->tanggal_selesai;
         $this->sisa_cuti = $kontrak->sisa_cuti;
+        $this->jumlah_cuti = $kontrak->jumlah_cuti;
     }
 
     public function save(){
@@ -31,6 +33,7 @@ class Modal extends Component
         $new_kontrak->tanggal_mulai = $this->tanggal_mulai;
         $new_kontrak->tanggal_selesai = $this->tanggal_selesai;
         $new_kontrak->sisa_cuti = $this->sisa_cuti;
+        $new_kontrak->jumlah_cuti = $this->jumlah_cuti;
 
         $new_kontrak->save();
         return redirect()->route('admin.edit', $this->kontrak->user_id);

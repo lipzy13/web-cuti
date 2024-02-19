@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Cuti;
+use App\Models\jenisCuti;
 use App\Models\Kontrak;
 use App\Models\Pegawai;
 use App\Models\User;
@@ -23,11 +24,13 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Kontrak::create([
-           'id' => 1,
-           'user_id' => 1,
-           'no_kontrak' => 'XXXX-XXXX-XXXX-0001',
-            'tanggal_mulai' => '2023-02-01'
+        jenisCuti::create([
+            'nama_cuti' => 'Tes',
+            'jumlah_hari' => 1
+        ]);
+        jenisCuti::create([
+            'nama_cuti' => 'Tes 2',
+            'jumlah_hari' => 2
         ]);
     }
 }

@@ -20,10 +20,11 @@ class DeleteCuti extends Component
         if ($target) {
             $target->delete();
         }
-        Kontrak::where('no_kontrak', $this->cuti->kontrak->no_kontrak)->decrement('jumlah_cuti', 1);
-        Kontrak::where('no_kontrak', $this->cuti->kontrak->no_kontrak)->increment('sisa_cuti', 1);
-
-        return redirect()->route('admin.edit', $this->cuti->kontrak->pegawai_id);
+        if ($this->cuti->jenisCuti == 1) {
+            Kontrak::where('no_kontrak', $this->cuti->kontrak->no_kontrak)->decrement('jumlah_cuti', 1);
+            Kontrak::where('no_kontrak', $this->cuti->kontrak->no_kontrak)->increment('sisa_cuti', 1);
+        }
+        return redirect()->route('admin.edit', $this->cuti->kontrak->user_id);
     }
 
     public function render()

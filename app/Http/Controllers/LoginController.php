@@ -20,9 +20,9 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->intended('/dashboard');
+        } else {
+            return redirect()->back()->withErrors(['msg'=>'NIK atau password salah']);
         }
-
-        return back()->with('loginError', 'NIK atau password salahl!');
     }
 
     public function logout (Request $request) {

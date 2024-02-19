@@ -9,6 +9,7 @@ use App\Models\Kontrak;
 use App\Models\Pegawai;
 use Auth;
 use Illuminate\Http\Request;
+use function PHPUnit\Framework\isNull;
 
 class DashboardPegawaiController extends Controller
 {
@@ -34,15 +35,18 @@ class DashboardPegawaiController extends Controller
      */
     public function create()
     {
-
-        $kontrak_aktif = Kontrak::where('user_id', auth()->user()->id)->where('aktif', true)->first();
-        $cuti = $kontrak_aktif->cuti;
-        $durasi = $kontrak_aktif->jumlah_cuti;
-        return view('dashboard.pegawai.create',[
-            "cuti" => $cuti,
-            "kontrak" => $kontrak_aktif,
-            "durasi" => $durasi,
-        ]);
+        if(!Kontrak::where('user_id', auth()->user()->id)->where('aktif', true)->get()->count()){
+            return redirect('/dashboard');
+        } else {
+            $kontrak_aktif = Kontrak::where('user_id', auth()->user()->id)->where('aktif', true)->first();
+            $cuti = $kontrak_aktif->cuti;
+            $durasi = $kontrak_aktif->jumlah_cuti;
+            return view('dashboard.pegawai.create',[
+                "cuti" => $cuti,
+                "kontrak" => $kontrak_aktif,
+                "durasi" => $durasi,
+            ]);
+        }
     }
 
     /**

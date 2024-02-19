@@ -7,8 +7,7 @@ use App\Models\TanggalCuti;
 ?>
 @extends('dashboard.pegawai.layouts.main')
 @section('container')
-<div class=" bg-zinc-100 w-5/6 h-screen" >
-
+<div class=" bg-zinc-100 ms-60 w-full h-screen" >
     <div class="grid grid-cols-4 mx-16 -mt-2 gap-4 p-4">
         <div class="bg-white p-4 rounded-md  pl-8 shadow-xl {{!$kontrak_aktif ? 'col-span-4': 'col-span-3'}}">
             <h2 class="mt-4 text-5xl font-bold pb-4">{{ auth()->user()->nama }}</h2>
@@ -28,7 +27,7 @@ use App\Models\TanggalCuti;
           data: {
               labels: ['Terpakai', 'Tersisa'],
               datasets: [{
-                  data: [{{ $kontrak_aktif->jumlah_cuti}}, {{$kontrak_aktif->jumlah_bulan}}],
+                  data: [{{ $kontrak_aktif->jumlah_cuti}}, {{$kontrak_aktif->sisa_cuti}}],
                   backgroundColor: [
                       '#57BEB5',
                       '#3070F5',
