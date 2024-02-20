@@ -16,6 +16,7 @@
     "dependencies": {
         "material-icons": "^1.13.12",
         "preline": "^2.0.3",
-        "sweetalert2": "^11.10.5"
+        "sweetalert2": "^11.10.5",
+        "vercel": "^33.5.1"
     }
 }
